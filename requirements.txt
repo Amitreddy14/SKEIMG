@@ -1,0 +1,10 @@
+opencv-python
+tensorflow
+keras
+matplotlib
+numpy
+scipy
+pillow
+scikit-image
+fiftyone
+pycocotools

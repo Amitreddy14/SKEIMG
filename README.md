@@ -22,7 +22,7 @@ Figure 1. Simple sketches created by ourselves
 
 I believe that the COCO dataset, containing 80K images with 80 categories, would provide our model with comprehensive training data with sufficient size and generality. Some sample classes are: cat, dog, umbrella, car, backpack, hotdog, etc. My vision was that given sufficient amounts of data, our model would eventually learn to convert the sketches into real-life pictures given both the outline contour of the object as well as the context of the object. 
 
-Our preprocessing of data is divided into 3 steps. First, we downloaded the dataset using the app FiftyOne and extracted desired classes of objects with a size limitation of no less than 64 * 64 for the sake of more accurate training. Then we used OpenCV to apply filters to convert each colored image into a grayscale sketch-like image after re-scaling the original image to size 64 * 64. Lastly, we concatenated the original images with the sketches, with the sketches on the left-hand side and the original image on the right, generating ready-to-train inputs of shape 64 * 128 * 3.
+My preprocessing of data is divided into 3 steps. First, I downloaded the dataset using FiftyOne and extracted desired classes of objects with a size limitation of no less than 64 * 64 for the sake of more accurate training. Then I used OpenCV to apply filters to convert each colored image into a grayscale sketch-like image after re-scaling the original image to size 64 * 64. Lastly, I concatenated the original images with the sketches, with the sketches on the left-hand side and the original image on the right, generating ready-to-train inputs of shape 64 * 128 * 3.
 
 ![dataset](sample_data/buses/20694.png)
 ![dataset](sample_data/clocks/21233.png)

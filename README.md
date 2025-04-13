@@ -32,15 +32,15 @@ Figure 2. Sample sketches processed from the COCO dataset
 
 ### Model Architecture
 
-We used the model structure given by the paper (Lu, Yongyi & Wu, Shangzhe & Tai, Yu-Wing & Tang, Chi-Keung. 2017.), as illustrated by the figure below. 
+I used the model structure given by the paper (Lu, Yongyi & Wu, Shangzhe & Tai, Yu-Wing & Tang, Chi-Keung. 2017.), as illustrated by the figure below. 
 
 ![architecture](assets/architecture.png)
 
 Figure 3. Model architecture
 
-Although there exists a relevant project on Github done by the authors of our reference paper, the model in this project is a more advanced version and the functionality is quite different. Also, since the project and paper were created years ago, many codes and functions are outdated and cannot be used or lack readability. Therefore, we decided to only consider the architectural design as a reference but build the model from scratch by ourselves.
+Although there exists a relevant project on Github done by the authors of my reference paper, the model in this project is a more advanced version and the functionality is quite different. Also, since the project and paper were created years ago, many codes and functions are outdated and cannot be used or lack readability. Therefore, I decided to only consider the architectural design as a reference but build the model from scratch by myself.
 
-The generator would take in the sketch (64 * 128, but the right-hand side is empty as the real photo is masked out) as the input, flatten it and pass a linear layer, then take the output and pass it through five Conv2DTranspose layers, each with kernel size 5, strides 2, and “same” padding. We used LeakyRelu as the activation function for all the layers, and tanh for the output layer. BatchNormalization is applied after each Conv2DTranspose layer except the last one to increase model efficiency. This upsampling process of the latent space would add non-linearities to the model and produce a higher resolution image of 64 * 128.
+The generator would take in the sketch (64 * 128, but the right-hand side is empty as the real photo is masked out) as the input, flatten it and pass a linear layer, then take the output and pass it through five Conv2DTranspose layers, each with kernel size 5, strides 2, and “same” padding. I used LeakyRelu as the activation function for all the layers, and tanh for the output layer. Batch Normalization is applied after each Conv2DTranspose layer except the last one to increase model efficiency. This upsampling process of the latent space would add non-linearities to the model and produce a higher resolution image of 64 * 128.
 
 The discriminator contains four Cov2d layers, also with kernel size 5 and strides 2, that reduce the feature map’s dimension. The output is then passed to a fully connected Dense layer with softmax activation to produce the one-dimensional probability that tells if the image is fake or not. 
 

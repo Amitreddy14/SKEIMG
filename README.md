@@ -2,17 +2,17 @@
 
 ## Introduction
 
-To explore the utilization of deep learning in artistic expression, we build a model that converts hand-drawn sketches to photo-like images, allowing people without artistic backgrounds to see the visual graphics of their work. 
+To explore the utilization of deep learning in artistic expression, I build a model that converts hand-drawn sketches to photo-like images, allowing people without artistic backgrounds to see the visual graphics of their work. 
 
-We reimplemented the paper “Sketch-to-Image Generation Using Deep Contextual Completion” (Lu, Yongyi & Wu, Shangzhe & Tai, Yu-Wing & Tang, Chi-Keung. 2017.). We trained the model with sketches we drew, as well as filtered images from the COCO dataset. Given a sketch input, the model would be able to generate colorful images. 
+I reimplemented the paper “Sketch-to-Image Generation Using Deep Contextual Completion” (Lu, Yongyi & Wu, Shangzhe & Tai, Yu-Wing & Tang, Chi-Keung. 2017.). I trained the model with sketches we drew, as well as filtered images from the COCO dataset. Given a sketch input, the model would be able to generate colorful images. 
 
 ## Methodology
 
 ### Data and Preprocessing
 
-We expect our input data to be size 64 * 128, each as a concatenation of a sketch and the corresponding photo/image. A 64 * 64 mask is applied to the right-hand side so that only the sketch on the left-hand side would be fed as an input to the generator, whereas the complete photo without the mask is used to train the discriminator as the "real" labels. The prediction by the generator is used to prepare the discriminator as the "fake" labels.
+I expect our input data to be size 64 * 128, each as a concatenation of a sketch and the corresponding photo/image. A 64 * 64 mask is applied to the right-hand side so that only the sketch on the left-hand side would be fed as an input to the generator, whereas the complete photo without the mask is used to train the discriminator as the "real" labels. The prediction by the generator is used to prepare the discriminator as the "fake" labels.
 
-We begin by creating a simple dataset with very distinguishable sketches using images we found online, and create the corresponding labels using graphic tools such as Photoshop. These simple sketches are categorized into 5 classes and each class has a color: fundamental shapes (circles, squares, …) are red, animals are dark brown, trees are green, flowers are orange, and ships are blue. As we tuned the model to produce images similar to the expected outputs, we switched to a more complex dataset converted from the COCO data. 
+I begin by creating a simple dataset with very distinguishable sketches using images we found online, and create the corresponding labels using graphic tools such as Photoshop. These simple sketches are categorized into 5 classes and each class has a color: fundamental shapes (circles, squares, …) are red, animals are dark brown, trees are green, flowers are orange, and ships are blue. As I tuned the model to produce images similar to the expected outputs, I switched to a more complex dataset converted from the COCO data. 
 
 ![dataset](sample_data/test/d6.png)
 ![dataset](sample_data/test/c6.png)
@@ -20,7 +20,7 @@ We begin by creating a simple dataset with very distinguishable sketches using i
 
 Figure 1. Simple sketches created by ourselves
 
-We believe that the COCO dataset, containing 80K images with 80 categories, would provide our model with comprehensive training data with sufficient size and generality. Some sample classes are: cat, dog, umbrella, car, backpack, hotdog, etc. Our vision was that given sufficient amounts of data, our model would eventually learn to convert the sketches into real-life pictures given both the outline contour of the object as well as the context of the object. 
+I believe that the COCO dataset, containing 80K images with 80 categories, would provide our model with comprehensive training data with sufficient size and generality. Some sample classes are: cat, dog, umbrella, car, backpack, hotdog, etc. My vision was that given sufficient amounts of data, our model would eventually learn to convert the sketches into real-life pictures given both the outline contour of the object as well as the context of the object. 
 
 Our preprocessing of data is divided into 3 steps. First, we downloaded the dataset using the app FiftyOne and extracted desired classes of objects with a size limitation of no less than 64 * 64 for the sake of more accurate training. Then we used OpenCV to apply filters to convert each colored image into a grayscale sketch-like image after re-scaling the original image to size 64 * 64. Lastly, we concatenated the original images with the sketches, with the sketches on the left-hand side and the original image on the right, generating ready-to-train inputs of shape 64 * 128 * 3.
 

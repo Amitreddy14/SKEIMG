@@ -62,7 +62,7 @@ I train alternately between generator and discriminator based on the Tensorflow 
 I primarily assess the results based on visual outputs from the generator. While it is difficult to evaluate the model quantitatively purely by naked-eye observation, I involved an evaluation model that can compare two images’ identifying features. This evaluation process was inspired by the reference paper, but I didn’t use the same evaluation model. I found that the VGG16 model without the last “fc2” layer can summarize the identifying vectors of the input images, and I can decide the similarity of the two images by calculating the cosine of the angle between their identifying vectors. Through this process, similar evaluation functionality can be achieved in a simple and convenient way. I developed the test function based on the evaluation model, which takes batches of real images and predictions from the generator and returns the average similarity between them.
 
 ## Results
-Unfortunately, our model hasn’t reached the expected performance, but remarkable progress has been made. We’re still working on the simple version data set, and here’re some sample learning processes of the generator:
+Unfortunately, the model hasn’t reached the expected performance, but remarkable progress has been made. I am still working on the simple version data set, and here’re some sample learning processes of the generator:
  
 ![result](assets/simple_result.png)
 
@@ -76,7 +76,7 @@ However, when running the model on the COCO dataset, either the generator or the
 
 Figure 5. Result after training 9, 15, 39, 70, 91, 105 epochs on the “donuts” dataset
 
-We concluded that the following reasons caused the model to fail to generate more complex images from sketches: 
+I concluded that the following reasons caused the model to fail to generate more complex images from sketches: 
 
 - A lot of the input sketches do not have distinctive borders, and the original images have backgrounds. Hence, the discriminator cannot recognize the clear edges, and the generator cannot learn to fit specific shapes. 
 - The model itself is very susceptible to local minimums. Either the generator or the discriminator. GANs’ general stability problem.

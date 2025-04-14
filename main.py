@@ -60,4 +60,17 @@ def alt_train(model, X_train):
         gen = model.generator.predict(sketch)
         sample_images(gen[0], epoch)
         if epoch % 50 == 0:
-            visualize_loss(d_loss_list, g_loss_list, epoch)    
+            visualize_loss(d_loss_list, g_loss_list, epoch)
+
+def train(model, X_train):
+
+    d_loss_list = []
+    g_loss_list = []
+
+    # Adversarial ground truths
+    valid = np.ones((opt.batch_size, 1))
+    fake = np.zeros((opt.batch_size, 1))
+
+    X_train = X_train.astype('float32') / 255
+
+    for epoch in range(opt.epochs):          

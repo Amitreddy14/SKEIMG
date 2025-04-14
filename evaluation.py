@@ -23,3 +23,13 @@ class evaluation():
 		for i in range(pred.shape[0]):
 			sim += self.calculate_similarity(pred[i], labels[i])
 		return sim / pred.shape[0]
+	def test(self, model, test_input, test_labels):
+		sim = 0
+		i = 0
+		while i + model.batch_size <= test_input.shape[0]:
+			batch_input = test_input[i: i+model.batch_size]
+			batch_label = test_labels[i: i+model.batch_size]
+			pred = model.call(batch_input)
+			sim += self.similarity(pred, batch_label)
+			i += model.batch_size
+		return sim * model.batch_size / i

@@ -68,3 +68,36 @@ def store_source_img(store_dir, size_lower_limit):
     view = dataset.filter_labels(label_field, F("label").is_in(classes))
     os.makedirs(store_dir, exist_ok=True)
     extract_classwise_instances(view, store_dir, label_field, size_lower_limit)
+
+def image_to_sketch(img, kernel_size=21):
+    """
+    Inputs:
+    - img: RGB image, ndarray of shape []
+    - kernel_size: 7 by default, used in DoG processing
+    - greyscale: False by default, convert to greyscale image if True, RGB otherwise
+    Returns:
+    - RGB or greyscale sketch, ndarray of shape [] or []
+    """
+
+    # img = adjust_contrast(img)
+
+    # convert to greyscale
+    grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # invert
+    inv = cv2.bitwise_not(grey)
+    # blur
+    blur = cv2.GaussianBlur(inv, (kernel_size, kernel_size), sigmaX=0, sigmaY=0)
+    # invert
+    inv_blur = cv2.bitwise_not(blur)
+    # convert to sketch
+    sketch = cv2.divide(grey, inv_blur, scale=256.0)
+
+    # sketch = adjust_contrast(sketch)
+
+    out = cv2.cvtColor(sketch, cv2.COLOR_GRAY2RGB)
+
+    return out
+
+# def dodgeV2(x,y):
+#     return cv2.divide(x, 255-y, scale=256)
+

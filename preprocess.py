@@ -160,3 +160,16 @@ def get_data(input_dir):
 
     return inputs
 
+def main():
+    store_dir = "sample_data/new_cars"
+    size_lower_limit = 64
+    store_source_img(store_dir, size_lower_limit)
+
+    from_dir = "sample_data/new_cars"
+    to_dir = "sample_data/car_sketches"
+    img_size = 64
+    generate_data(from_dir, to_dir, img_size)
+
+
+if __name__ == '__main__':
+    main()

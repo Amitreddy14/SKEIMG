@@ -55,4 +55,47 @@ class ContextualGAN():
 
         # For the combined model we will only train the generator
         self.discriminator.trainable = False
-        
+
+         # The discriminator takes generated images as input and determines
+        # if it is generated or if it is a real image
+        valid = self.discriminator(gen_missing)
+
+        # The combined model (stacked generator and discriminator)
+        # Trains generator to fool discriminator
+        self.combined = Model(masked_img , [valid, gen_missing])
+        self.combined.compile(loss=['binary_crossentropy', contextual_loss],
+            loss_weights=[opt.lam1, opt.lam2],
+            optimizer=self.optimizer)
+
+    def build_generator(self):
+
+        model = Sequential()
+
+        model.add(Input(self.img_shape))
+        model.add(Flatten())
+        model.add(Dense(4*8*512))
+        model.add(Reshape((4, 8, opt.gf_dim * 8)))
+        model.add(Conv2DTranspose(opt.gf_dim * 8, 1, 1, 'same'))
+        model.add(BatchNormalization())
+        model.add(LeakyReLU())
+        model.add(Conv2DTranspose(opt.gf_dim * 4, 5, 2, 'same'))
+        model.add(BatchNormalization())
+        model.add(LeakyReLU())
+        model.add(Conv2DTranspose(opt.gf_dim * 2, 5, 2, 'same'))
+        model.add(BatchNormalization())
+        model.add(LeakyReLU())
+        model.add(Conv2DTranspose(opt.gf_dim, 5, 2, 'same'))
+        model.add(BatchNormalization())
+        model.add(LeakyReLU())
+        model.add(Conv2DTranspose(3, 5, 2, 'same'))
+        model.add(LeakyReLU())
+        model.add(Activation('tanh'))
+
+        model.summary()
+
+        masked_img = Input(shape=self.img_shape)
+        gen_missing = model(masked_img)
+
+        return Model(masked_img, gen_missing)        
+
+    

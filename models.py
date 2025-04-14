@@ -1,8 +1,8 @@
 import argparse
-import numpy as np
+import tensorflow as tf
 
-from matplotlib import pyplot as plt
-
-from models import *
-from evaluation import *
-from preprocess import *
+from tensorflow.keras.layers import Input, Dense, Flatten, Dropout, Reshape
+from tensorflow.keras.layers import BatchNormalization, Activation, LeakyReLU
+from tensorflow.keras.layers import Conv2D, Conv2DTranspose
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.optimizers import Adam

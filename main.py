@@ -108,5 +108,11 @@ def train(model, X_train):
         if epoch % opt.sample_interval == 0:
             sample_images(gen[1], epoch)
             visualize_loss(d_loss_list, g_loss_list, epoch)
+
+def mask_image(imgs):
+    # change mask shape
+    mask_shape = imgs.shape[2]
+    sketches = np.copy(imgs)
+    sketches[:, :, mask_shape // 2:, :] = 1.0
+    return sketches  
             
-               

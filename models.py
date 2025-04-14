@@ -98,4 +98,21 @@ class ContextualGAN():
 
         return Model(masked_img, gen_missing)        
 
-    
+    def build_discriminator(self):
+
+        model = Sequential()
+
+        model.add(Input(self.img_shape))
+        model.add(Conv2D(opt.df_dim, 5, 2, 'same'))
+        model.add(Conv2D(opt.df_dim * 2, 5, 2, 'same'))
+        model.add(Conv2D(opt.df_dim * 4, 5, 2, 'same'))
+        model.add(Conv2D(opt.df_dim * 8, 5, 2, 'same'))
+        model.add(Flatten())
+        model.add(Dense(1, 'softmax'))
+
+        model.summary()
+
+        img = Input(shape=self.img_shape)
+        validity = model(img)
+
+        return Model(img, validity)

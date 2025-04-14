@@ -109,3 +109,32 @@ def adjust_contrast(img):
     out = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 7)
 
     return out
+
+def pad_resize(img, img_size):
+    # pad or resize img to square of side length (img_size)
+    # h, w, c = img.shape
+    # # white padding
+    # color = (255,255,255)
+
+    down_points = (img_size, img_size)
+    out = cv2.resize(img, down_points, interpolation=cv2.INTER_LINEAR)
+
+    return out
+
+def store_inputs(from_dir, to_dir, img_size, i):
+    # store processed images (after concat)
+    # size: desired original img size, output will be twice as wide (concat)
+    files = get_images_paths(from_dir)
+    for f in files:
+        ext = str(i)+".png"
+        img = cv2.imread(f)
+        img = pad_resize(img, img_size)
+        sketch = image_to_sketch(img)
+
+        # img = pad_resize(img, img_size)
+        # sketch = pad_resize(sketch, img_size)
+
+        out = cv2.hconcat([sketch, img])
+        cv2.imwrite(os.path.join(to_dir, ext), out)
+        i+=1
+    return i

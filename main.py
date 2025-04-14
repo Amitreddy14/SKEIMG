@@ -92,5 +92,21 @@ def train(model, X_train):
         d_loss_real = model.discriminator.train_on_batch(imgs, valid)
         d_loss_fake = model.discriminator.train_on_batch(gen, fake)
         d_loss = 0.5 * np.add(d_loss_real, d_loss_fake)     
-        
-           
+
+        # ---------------------
+        #  Train Generator 
+        # ---------------------
+
+        g_loss = model.combined.train_on_batch(sketch, [valid, imgs])
+
+        d_loss_list.append(d_loss)
+        g_loss_list.append(g_loss[0])
+
+        # Plot the progress
+        print ("%d [D loss: %f] [G loss: %f, perceptual loss: %f, contextual loss: %f]" % (epoch, d_loss, g_loss[0], g_loss[1], g_loss[2]))
+
+        if epoch % opt.sample_interval == 0:
+            sample_images(gen[1], epoch)
+            visualize_loss(d_loss_list, g_loss_list, epoch)
+            
+               

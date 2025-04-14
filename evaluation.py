@@ -17,3 +17,9 @@ class evaluation():
 		vector1 = self.get_feature_vector(img1)
 		vector2 = self.get_feature_vector(img2)
 		return 1 - cosine(vector1, vector2)
+	
+	def similarity(self, pred, labels):
+		sim = 0
+		for i in range(pred.shape[0]):
+			sim += self.calculate_similarity(pred[i], labels[i])
+		return sim / pred.shape[0]

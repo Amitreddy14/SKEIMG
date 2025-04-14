@@ -45,4 +45,14 @@ class ContextualGAN():
         self.discriminator.compile(loss='binary_crossentropy',
             optimizer=self.optimizer)
         
+        # Build the generator
+        self.generator = self.build_generator()
+
+        # The generator takes noise as input and generates the missing
+        # part of the image
+        masked_img = Input(shape=self.img_shape)
+        gen_missing = self.generator(masked_img)
+
+        # For the combined model we will only train the generator
+        self.discriminator.trainable = False
         

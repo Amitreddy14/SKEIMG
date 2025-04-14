@@ -39,3 +39,10 @@ class ContextualGAN():
             y_pred = tf.divide(y_pred, tf.tile(tf.expand_dims(tf.reduce_sum(y_pred, axis=1), 1), [1,tf.shape(y_pred)[1]]))
 
             return tf.reduce_sum(tf.multiply(y_true, tf.math.log(tf.divide(y_true, y_pred))), axis=1)
+        
+        # Build and compile the discriminator
+        self.discriminator = self.build_discriminator()
+        self.discriminator.compile(loss='binary_crossentropy',
+            optimizer=self.optimizer)
+        
+        

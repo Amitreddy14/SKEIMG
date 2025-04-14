@@ -138,3 +138,14 @@ def store_inputs(from_dir, to_dir, img_size, i):
         cv2.imwrite(os.path.join(to_dir, ext), out)
         i+=1
     return i
+
+def generate_data(from_dir, to_dir, img_size):
+    # generate sketches
+    os.makedirs(to_dir, exist_ok=True)
+
+    folders = glob.glob(f'{from_dir}/*/')
+    i=0
+    for f in folders:
+        print(f)
+        i = store_inputs(f, to_dir, img_size,i)
+

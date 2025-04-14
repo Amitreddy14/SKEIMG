@@ -123,4 +123,17 @@ def sample_images(img, epoch):
     plt.savefig(f'saved_img/{epoch}.png')
     plt.close()
 
-            
+def visualize_loss(d_loss, g_loss, epoch): 
+    """
+    Uses Matplotlib to visualize the losses of our model.
+    :param losses: list of loss data stored from train. Can use the model's loss_list 
+    field 
+    """
+    x = [i for i in range(len(d_loss))]
+    plt.plot(x, d_loss, color="blue", label="d_loss")
+    plt.plot(x, g_loss, color="green", label="g_loss")
+    plt.title('Loss per batch')
+    plt.xlabel('Batch')
+    plt.ylabel('Loss')
+    plt.savefig(f'saved_img/loss{epoch}.png')
+    plt.close()            

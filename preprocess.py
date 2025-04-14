@@ -101,3 +101,11 @@ def image_to_sketch(img, kernel_size=21):
 # def dodgeV2(x,y):
 #     return cv2.divide(x, 255-y, scale=256)
 
+def adjust_contrast(img):
+
+    # weight = np.ones(img.shape) * 1.2
+    # out = np.uint8(cv2.multiply(np.float32(img), weight))
+
+    out = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 7)
+
+    return out

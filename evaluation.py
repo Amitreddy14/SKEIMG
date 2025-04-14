@@ -1,7 +1,7 @@
 import cv2
 from scipy.spatial.distance import cosine
-from keras.models import Model
-from tensorflow.keras.applications import VGG16
+from tensorflow.keras.models import Model
+from keras.applications import VGG16
 
 class evaluation():
 	def __init__(self):
@@ -33,3 +33,20 @@ class evaluation():
 			sim += self.similarity(pred, batch_label)
 			i += model.batch_size
 		return sim * model.batch_size / i
+
+if __name__ == '__main__':
+	model = evaluation()
+
+	img1 = cv2.imread("./img1.jpg")
+	img2 = cv2.imread("./img2.jpg")
+	img3 = cv2.imread("./img3.jpg")
+	img4 = cv2.imread("./img4.jpg")
+	img5 = cv2.imread("./img5.jpg")
+	img6 = cv2.imread("./img6.jpg")
+	
+	print(model.calculate_similarity(img1, img2))
+	print(model.calculate_similarity(img1, img3))
+	print(model.calculate_similarity(img1, img4))
+	print(model.calculate_similarity(img1, img5))
+	print(model.calculate_similarity(img1, img6))
+		

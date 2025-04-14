@@ -45,3 +45,26 @@ def extract_classwise_instances(samples, output_dir, label_field, size_lower_lim
                     os.mkdir(label_dir)
                 output_filepath = os.path.join(label_dir, det.id+ext)
                 cv2.imwrite(output_filepath, mask_img)
+
+def store_source_img(store_dir, size_lower_limit):
+    dataset_name = "coco-image-example"
+    if dataset_name in fo.list_datasets():
+        fo.delete_dataset(dataset_name)
+
+    label_field = "ground_truth"
+    classes = ["car"]
+
+    dataset = foz.load_zoo_dataset(
+        "coco-2017",
+        split="validation",
+        label_types=["segmentations"],
+        classes=classes,
+        # max_samples=10,
+        label_field=label_field,
+        dataset_name=dataset_name,
+        shuffle=True,
+    )
+
+    view = dataset.filter_labels(label_field, F("label").is_in(classes))
+    os.makedirs(store_dir, exist_ok=True)
+    extract_classwise_instances(view, store_dir, label_field, size_lower_limit)

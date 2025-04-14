@@ -150,4 +150,14 @@ def load_model(model):
     model.discriminator = tf.keras.models.load_model("saved_model/discriminator")
     model.generator = tf.keras.models.load_model("saved_model/generator")
 
+if __name__ == '__main__':
+    model = ContextualGAN()
 
+    # eval = evaluation()
+
+    # Import data from preprocess
+    train_input = get_data("sample_data/test")
+
+    # train(model, train_input)
+    alt_train(model, train_input)
+    # print(eval.test(model, test_input, test_labels))

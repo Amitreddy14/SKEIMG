@@ -73,4 +73,24 @@ def train(model, X_train):
 
     X_train = X_train.astype('float32') / 255
 
-    for epoch in range(opt.epochs):          
+    for epoch in range(opt.epochs):  
+
+        # ---------------------
+        #  Train Discriminator
+        # ---------------------
+
+        # Select a random batch of images
+        idx = np.random.randint(0, X_train.shape[0], opt.batch_size)
+        imgs = X_train[idx]
+
+        sketch = mask_image(imgs)
+
+        # Generate a batch of new images
+        gen = model.generator.predict(sketch)
+
+        # Train the discriminator
+        d_loss_real = model.discriminator.train_on_batch(imgs, valid)
+        d_loss_fake = model.discriminator.train_on_batch(gen, fake)
+        d_loss = 0.5 * np.add(d_loss_real, d_loss_fake)     
+        
+           

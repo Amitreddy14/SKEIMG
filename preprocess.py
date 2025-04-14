@@ -149,3 +149,14 @@ def generate_data(from_dir, to_dir, img_size):
         print(f)
         i = store_inputs(f, to_dir, img_size,i)
 
+def get_data(input_dir):
+    input_paths = get_images_paths(input_dir)
+    inputs = []
+
+    for f in input_paths:
+        inputs.append(cv2.imread(f))
+
+    inputs = np.array(inputs, dtype='float32')
+
+    return inputs
+

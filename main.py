@@ -115,4 +115,12 @@ def mask_image(imgs):
     sketches = np.copy(imgs)
     sketches[:, :, mask_shape // 2:, :] = 1.0
     return sketches  
+
+def sample_images(img, epoch):
+    img = img.astype('float32')[:,:,::-1]
+    img = np.clip(img, 0, 1)
+    plt.imshow(img)
+    plt.savefig(f'saved_img/{epoch}.png')
+    plt.close()
+
             

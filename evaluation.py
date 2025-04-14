@@ -1,7 +1,7 @@
 import cv2
 from scipy.spatial.distance import cosine
-from tensorflow.keras.models import Model
-from keras.applications import VGG16
+from keras.models import Model
+from tensorflow.keras.applications import VGG16
 
 class evaluation():
 	def __init__(self):
@@ -49,4 +49,3 @@ if __name__ == '__main__':
 	print(model.calculate_similarity(img1, img4))
 	print(model.calculate_similarity(img1, img5))
 	print(model.calculate_similarity(img1, img6))
-		

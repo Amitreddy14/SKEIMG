@@ -137,3 +137,12 @@ def visualize_loss(d_loss, g_loss, epoch):
     plt.ylabel('Loss')
     plt.savefig(f'saved_img/loss{epoch}.png')
     plt.close()            
+
+def save_model(model):
+    """
+    input param: model is the trained GAN model including both generator and discrinminator 
+    input param: train_X is the training dataset, used to sample randomly and generate sketch
+    """
+    model.discriminator.save("saved_model/discriminator")
+    model.generator.save("saved_model/generator")
+    

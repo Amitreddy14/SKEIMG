@@ -145,4 +145,9 @@ def save_model(model):
     """
     model.discriminator.save("saved_model/discriminator")
     model.generator.save("saved_model/generator")
-    
+
+def load_model(model): 
+    model.discriminator = tf.keras.models.load_model("saved_model/discriminator")
+    model.generator = tf.keras.models.load_model("saved_model/generator")
+
+
